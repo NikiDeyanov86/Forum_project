@@ -17,14 +17,14 @@ class Topic(Base):
     __tablename__ = "Topic"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String(80), notnull=True)
-    description = Column(String(256), notnull=True)
+    title = Column(String(80), nullable=False)
+    description = Column(String(256), nullable=False)
 
 
 class Post(Base):
     __tablename__ = "Post"
 
-    id = Column(Integer, primart_key=True)
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("User.id"))
     topic_id = Column(Integer, ForeignKey("Topic.id"))
     date = Column(DateTime, default=datetime.now())

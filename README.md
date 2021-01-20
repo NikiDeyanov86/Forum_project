@@ -13,5 +13,5 @@ pip install -r requirements.txt
 ```bash
 # run
 export FLASK_ENV=development
-python main.py
+flask run
 ```
