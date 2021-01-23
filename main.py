@@ -11,10 +11,24 @@ app = Flask(__name__)
 
 init_db()
 
+
 @app.teardown_appcontext
 def shutdown_context(exception=None):
     db_session.remove()
 
+
 @app.route('/', methods=['GET'])
 def homepage():
-    return render_template("home.html")
+    topics = Topic.query.all()
+
+    return render_template("home.html", topics=topics)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    return render_template("register.html")
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template("login.html")

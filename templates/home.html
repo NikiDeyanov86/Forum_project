@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 
+{% block title %} Home {% endblock %}
+
 {% block content %}
-<h1>Hello world</h1>
+<div class="list-group mt-5">
+    {% if not topics %}
+    <div class="row justify-content-center">
+        <div class="cold-md-3">
+            <h1>There are no topics currently. Why don't you start one?</h1>
+        </div>
+    </div>
+    {% else %}
+    {% for topic in topics %}
+    <a href="#" class="list-group-item list-group-item-action">topic.name</a>
+    {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}
