@@ -1,25 +1,32 @@
 # Forum_project
 Forum flask website project
 
-## Instalation
+## Installation Linux
 ```bash
-# install Linux
+# install 
 virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
-# install Windows 
-python -m virtualenv .
-.\scripts\activate
-pip install -r requirements.txt
 
-## Run
+## Run Linux
 ```bash
-# run Linux
+# run 
 export FLASK_ENV=development
 flask run
 ```
-# run Windows 
+
+## Installation Windows
+```bash
+# install  
+python -m virtualenv .
+.\scripts\activate
+pip install -r requirements.txt
+```
+# Run Windows
+```bash
+# run 
 set FLASK_ENV=development
 set FLASK_APP=main.py
 flask run
+```
