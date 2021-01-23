@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,29 @@
     {% block head %}
     {% endblock %}
 </head>
+
 <body>
-    <div class="container-fluid">
-        {% block content %}
-        {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Forum</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <a class="nav-link btn btn-outline-info my-2 my-sm-0 mx-1" href="/login">Sign in</a>
+          <a class="nav-link btn btn-outline-info my-2 my-sm-0 mx-1" href="/register">Sign up</a>
+        </div>
+      </nav>
+
+    <div class="container justify-content-center">
+    {% block content %}
+    {% endblock %}
     </div>
 </body>
+
 </html>
