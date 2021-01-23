@@ -23,7 +23,7 @@ python -m virtualenv .
 .\scripts\activate
 pip install -r requirements.txt
 ```
-# Run Windows
+## Run Windows
 ```bash
 # run 
 set FLASK_ENV=development
