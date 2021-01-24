@@ -12,6 +12,25 @@ class User(Base):
     username = Column(String(80), unique=True, nullable=False)
     password = Column(String(80), nullable=False)
 
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+
+    @property
+    def is_authenticated(self):
+        return self.id
+
+    @property
+    def is_active(self):
+        pass
+
+    @property
+    def is_anonymous(self):
+        pass
+
+    @property
+    def get_id(self):
+        return self.id
+
 
 class Topic(Base):
     __tablename__ = "Topic"
