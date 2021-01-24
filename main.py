@@ -1,3 +1,6 @@
+import uuid
+import os
+
 from flask import Flask
 from flask import render_template, request, redirect, make_response, url_for
 
@@ -25,8 +28,10 @@ def shutdown_context(exception=None):
 @app.route('/', methods=['GET'])
 def homepage():
     topics = Topic.query.all()
+    print(current_user)
+    print(current_user.__dict__)
 
-    return render_template("home.html", topics=topics)
+    return render_template("home.html", topics=topics, user=current_user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -35,14 +40,13 @@ def register():
         return render_template("register.html")
     else:
         username = request.form['username']
-        password = request.form['password']
+        password = generate_password_hash(request.form['password'])
 
         user = User(username=username, password=password)
         db_session.add(user)
         db_session.commit()
-        print(f'User id: {user.is_authenticated}')
 
-        return redirect(url_for('homepage'))
+        return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,9 +54,27 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/logout')
-@login_required
+@ app.route('/logout')
+@ login_required
 def logout():
+    current_user.login_id = None
+    db_session.commit()
     logout_user()
 
     return redirect(url_for('homepage'))
+
+
+@ app.route('/add_topic', methods=['GET', 'POST'])
+@ login_required
+def add_topic():
+    if request.method == 'GET':
+        return render_template("add_topic.html")
+    else:
+        title = request.form['title']
+        description = request.form['description']
+
+        topic = Topic(title=title, description=description)
+        db_session.add(topic)
+        db_session.commit()
+
+        return redirect(url_for('homepage'))
