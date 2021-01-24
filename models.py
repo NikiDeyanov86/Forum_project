@@ -28,7 +28,7 @@ class User(Base):
     def is_anonymous(self):
         False
 
-    @property
+    
     def get_id(self):
         return self.login_id
 
