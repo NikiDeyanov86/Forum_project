@@ -36,8 +36,11 @@ def homepage():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'login_id' in current_user.__dict__:
+        return redirect(url_for('homepage'))
+
     if request.method == 'GET':
-        return render_template("register.html")
+        return render_template("register.html", user=current_user)
     else:
         username = request.form['username']
         password = generate_password_hash(request.form['password'])
@@ -51,14 +54,19 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'login_id' in current_user.__dict__:
+        return redirect(url_for('homepage'))
+
     response = None
     if request.method == 'GET':
-        response = make_response(render_template('login.html'))
+        response = make_response(render_template('login.html',
+                                                 user=current_user))
     else:
         response = make_response(redirect(url_for('homepage')))
 
         user = User.query.filter_by(username=request.form['username']).first()
-        if user and check_password_hash(user.password, request.form['password']):
+        if user and check_password_hash(user.password,
+                                        request.form['password']):
             user.login_id = str(uuid.uuid4())
             db_session.commit()
             login_user(user)
@@ -79,7 +87,7 @@ def logout():
 @ login_required
 def add_topic():
     if request.method == 'GET':
-        return render_template("add_topic.html")
+        return render_template("add_topic.html", user=current_user)
     else:
         title = request.form['title']
         description = request.form['description']

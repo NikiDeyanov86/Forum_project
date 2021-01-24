@@ -32,8 +32,12 @@
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
           </ul>
+          {% if 'login_id' not in user.__dict__ %}
           <a class="nav-link btn btn-outline-info my-2 my-sm-0 mx-1" href="/login">Sign in</a>
           <a class="nav-link btn btn-outline-info my-2 my-sm-0 mx-1" href="/register">Sign up</a>
+          {% else %}
+          <a class="nav-link btn btn-outline-info my-2 my-sm-0 mx-1" href="/logout">Logout</a>
+          {% endif %}
         </div>
       </nav>
 

@@ -11,19 +11,24 @@
         </div>
         {% if user.login_id %}
         <div>
-            <a href="add_topic.html" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
         </div>
         {% endif %}
     </div>
     {% else %}
     {% if user.login_id %}
     <div>
-        <a href="add_topic.html" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
+        <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
     </div>
     {% endif %}
-    <div class="list-group">
+    <div class="list-group mt-3">
         {% for topic in topics %}
-        <a href="#" class="list-group-item list-group-item-action">topic.name</a>
+        <div>
+            <a href="#" class="list-group-item list-group-item-action" aria-describedby="description">
+                <h4>{{ topic.title }}</h4>
+                <h6 id="description" class="form-text text-muted">{{ topic.description }}</h6>
+            </a>
+        </div>
         {% endfor %}
         {% endif %}
     </div>
