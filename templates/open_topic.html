@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Open topic {% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <div class="row justify-content-center">
+        <div class="cold-md-3">
+            <h1>{{ topic.title }}</h1>
+        </div>
+    
+        <div>
+            <h3>{{ topic.description}}</h3>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
