@@ -97,3 +97,42 @@ def add_topic():
         db_session.commit()
 
         return redirect(url_for('homepage'))
+
+@app.route('/open_topic/<topic_id>', methods=['GET'])
+def open_topic(topic_id):
+    topic = Topic.query.filter_by(id = topic_id).first()
+    posts = Post.query.filter_by(topic_id = topic_id).all()
+    return render_template('open_topic.html', topic = topic, user = current_user, posts = posts)
+
+
+@app.route('/add_post/<topic_id>', methods=['GET', 'POST'])
+@login_required
+def add_post(topic_id):
+    if request.method == 'GET':
+        return render_template("add_post.html", user=current_user)
+    else:
+        title = request.form['title']
+        content = request.form['content']
+        
+        post = Post(title=title, content=content, user_id = current_user.id, topic_id=topic_id)
+        db_session.add(post)
+        db_session.commit()
+
+        return redirect(url_for('open_topic', topic_id = topic_id))
+
+
+@app.route('/delete_post/<post_id>', methods=['GET', 'POST'])
+@login_required
+def delete_post(post_id):
+    
+    post = Post.query.filter_by(id = post_id).first()
+    if post.user_id != current_user.id:
+        return redirect(url_for('open_topic', topic_id = post.topic_id))
+    
+    if request.method == 'GET':
+        return render_template("delete_post.html", user=current_user, topic_id = post.topic_id)
+    else:
+        db_session.delete(post)
+        db_session.commit()
+
+        return redirect(url_for('open_topic', topic_id = post.topic_id))

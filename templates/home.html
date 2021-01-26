@@ -24,7 +24,7 @@
     <div class="list-group mt-3">
         {% for topic in topics %}
         <div>
-            <a href="/open_topic" class="list-group-item list-group-item-action" aria-describedby="description">
+            <a href="/open_topic/{{ topic.id }}" class="list-group-item list-group-item-action" aria-describedby="description">
                 <h4>{{ topic.title }}</h4>
                 <h6 id="description" class="form-text text-muted">{{ topic.description }}</h6>
             </a>

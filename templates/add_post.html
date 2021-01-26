@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %} Add topic {% endblock %}
+{% block title %} Add post {% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-5 mx-auto align-middle">
         <div class="card mt-5">
             <div class="card-body">
-                <h5 class="card-title">Add a new topic</h5>
+                <h5 class="card-title">Add a new post</h5>
                 
                 <form method="POST">
                     <div class="form-group">
-                        <label for="InputTopicTitle">Title</label>
-                        <input type="text" class="form-control" name="title" id="InputTopicTitle" placeholder="Enter topic title" required>
+                        <label for="InputPostTitle">Title</label>
+                        <input type="text" class="form-control" name="title" id="InputPostTitle" placeholder="Enter post title" required>
                     </div>
                     <div class="form-group">
-                        <label for="InputTopicDesc">Description</label>
-                        <textarea class="form-control" name="description" id="InputTopicDesc" placeholder="Description" required maxlength="256"></textarea>
+                        <label for="InputTopicDesc">Content</label>
+                        <textarea class="form-control" name="content" id="InputTopicDesc" placeholder="Content" required maxlength="512"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
