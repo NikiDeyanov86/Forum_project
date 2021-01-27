@@ -28,10 +28,8 @@ def shutdown_context(exception=None):
 @app.route('/', methods=['GET'])
 def homepage():
     topics = Topic.query.all()
-    print(current_user)
-    print(current_user.__dict__)
 
-    return render_template("home.html", topics=topics, user=current_user)
+    return render_template("home.html", topics=topics)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -40,7 +38,7 @@ def register():
         return redirect(url_for('homepage'))
 
     if request.method == 'GET':
-        return render_template("register.html", user=current_user)
+        return render_template("register.html")
     else:
         username = request.form['username']
         password = generate_password_hash(request.form['password'])
@@ -59,8 +57,7 @@ def login():
 
     response = None
     if request.method == 'GET':
-        response = make_response(render_template('login.html',
-                                                 user=current_user))
+        response = make_response(render_template('login.html'))
     else:
         response = make_response(redirect(url_for('homepage')))
 
@@ -87,7 +84,7 @@ def logout():
 @ login_required
 def add_topic():
     if request.method == 'GET':
-        return render_template("add_topic.html", user=current_user)
+        return render_template("add_topic.html")
     else:
         title = request.form['title']
         description = request.form['description']
@@ -98,41 +95,42 @@ def add_topic():
 
         return redirect(url_for('homepage'))
 
+
 @app.route('/open_topic/<topic_id>', methods=['GET'])
 def open_topic(topic_id):
-    topic = Topic.query.filter_by(id = topic_id).first()
-    posts = Post.query.filter_by(topic_id = topic_id).all()
-    return render_template('open_topic.html', topic = topic, user = current_user, posts = posts)
+    topic = Topic.query.filter_by(id=topic_id).first()
+    posts = Post.query.filter_by(topic_id=topic_id).all()
+    return render_template('open_topic.html', topic=topic, posts=posts)
 
 
 @app.route('/add_post/<topic_id>', methods=['GET', 'POST'])
 @login_required
 def add_post(topic_id):
     if request.method == 'GET':
-        return render_template("add_post.html", user=current_user)
+        return render_template("add_post.html")
     else:
         title = request.form['title']
         content = request.form['content']
-        
-        post = Post(title=title, content=content, user_id = current_user.id, topic_id=topic_id)
+
+        post = Post(title=title, content=content, topic_id=topic_id,
+                    user_id=current_user.id)
         db_session.add(post)
         db_session.commit()
 
-        return redirect(url_for('open_topic', topic_id = topic_id))
+        return redirect(url_for('open_topic', topic_id=topic_id))
 
 
 @app.route('/delete_post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
-    
-    post = Post.query.filter_by(id = post_id).first()
+    post = Post.query.filter_by(id=post_id).first()
     if post.user_id != current_user.id:
-        return redirect(url_for('open_topic', topic_id = post.topic_id))
-    
+        return redirect(url_for('open_topic', topic_id=post.topic_id))
+
     if request.method == 'GET':
-        return render_template("delete_post.html", user=current_user, topic_id = post.topic_id)
+        return render_template("delete_post.html", post=post)
     else:
         db_session.delete(post)
         db_session.commit()
 
-        return redirect(url_for('open_topic', topic_id = post.topic_id))
+        return redirect(url_for('open_topic', topic_id=post.topic_id))

@@ -17,33 +17,35 @@
         <div class="cold-md-3">
             <h1>There are no posts currently. Why don't you add one?</h1>
         </div>
-        {% if user.login_id %}
+        {% if 'login_id' in current_user.__dict__ %}
         <div>
-            <a href="/add_post/{{topic.id}}" style="font-size: 2rem; color: cornflowerblue;">Add a post <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="/add_post/{{topic.id}}" style="font-size: 2rem; color: cornflowerblue;">Add a post <i
+                    class="bi bi-plus-circle-fill"></i></a>
         </div>
         {% endif %}
     </div>
     {% else %}
-    {% if user.login_id %}
+    {% if 'login_id' in current_user.__dict__ %}
     <div>
-        <a href="/add_post/{{topic.id}}" style="font-size: 2rem; color: cornflowerblue;">Add a post <i class="bi bi-plus-circle-fill"></i></a>
+        <a href="/add_post/{{topic.id}}" style="font-size: 2rem; color: cornflowerblue;">Add a post <i
+                class="bi bi-plus-circle-fill"></i></a>
     </div>
     {% endif %}
     <div class="list-group mt-3">
         {% for post in posts %}
         <div class="list-group-item list-group-item-action">
-                
-                <h6>{{ post.date}}</h6>
-                {% if (user.login_id) and (post.user_id == user.id) %}
-                        <div class= "float-right"> <a href = "/delete_post/{{post.id}}"> <i class="bi bi-trash" style = "font-size: 2rem; color: red"></i> </a></div>
-                {% endif %}
-                <h3>{{ post.title }}</h3>
-                <h5 id="description" class="form-text text-muted">{{ post.content }}</h5>
-                
-            
+            <h6>{{ post.date}}</h6>
+            {% if ('login_id' in current_user.__dict__) and (post.user_id == current_user.id) %}
+            <div class="float-right"> <a href="/delete_post/{{post.id}}"> <i class="bi bi-trash"
+                        style="font-size: 2rem; color: red"></i> </a></div>
+            {% endif %}
+            <h3>{{ post.title }}</h3>
+            <h5 id="description" class="form-text text-muted">{{ post.content }}</h5>
+
+
         </div>
         {% endfor %}
-        {% endif %}
+    {% endif %}
     </div>
 </div>
 

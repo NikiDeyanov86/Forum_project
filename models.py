@@ -28,7 +28,6 @@ class User(Base):
     def is_anonymous(self):
         False
 
-    
     def get_id(self):
         return self.login_id
 
