@@ -13,6 +13,7 @@ from database import db_session, init_db
 from login import login_manager
 from models import User, Topic, Post
 
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "ssucuuh398nuwetubr33rcuhne"
@@ -100,6 +101,8 @@ def add_topic():
 def open_topic(topic_id):
     topic = Topic.query.filter_by(id=topic_id).first()
     posts = Post.query.filter_by(topic_id=topic_id).all()
+    for post in posts:
+        print(post.__dict__)
     return render_template('open_topic.html', topic=topic, posts=posts)
 
 
@@ -111,9 +114,9 @@ def add_post(topic_id):
     else:
         title = request.form['title']
         content = request.form['content']
-
+        user_name = current_user.username
         post = Post(title=title, content=content, topic_id=topic_id,
-                    user_id=current_user.id)
+                    user_id=current_user.id, user_name=user_name)
         db_session.add(post)
         db_session.commit()
 
@@ -131,6 +134,25 @@ def delete_post(post_id):
         return render_template("delete_post.html", post=post)
     else:
         db_session.delete(post)
+        db_session.commit()
+
+        return redirect(url_for('open_topic', topic_id=post.topic_id))
+
+
+@app.route('/update_post/<post_id>', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    if post.user_id != current_user.id:
+        return redirect(url_for('open_topic', topic_id=post.topic_id))
+
+    if request.method == 'GET':
+        return render_template("update_post.html", post=post)
+    else:
+        post.title = request.form['title']
+        post.content = request.form['content']
+        post.date = datetime.now()
+    
         db_session.commit()
 
         return redirect(url_for('open_topic', topic_id=post.topic_id))
