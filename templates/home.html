@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="cold-md-3">
             <h1>There are no topics currently. Why don't you start one?</h1>
-            {% if 'login_id' not in current_user.__dict__ and 'login_id' in User.__dict__ %}
+            {% if 'login_id' not in current_user.__dict__ %}
             <br>
             <div class = "text-center mt-5">
                 <h2 class = "text-center mb-4">Then sign up for Forum now!</h2>
@@ -18,15 +18,20 @@
         </div>
         {% if 'login_id' in current_user.__dict__ %}
         <div class = "text-center mt-5">
-            <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">
+                Add a topic 
+                <i class="bi bi-plus-circle-fill"></i>
+            </a>
         </div>
-        
         {% endif %}
     </div>
     {% else %}
     {% if 'login_id' in current_user.__dict__ %}
     <div>
-        <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">Add a topic <i class="bi bi-plus-circle-fill"></i></a>
+        <a href="/add_topic" style="font-size: 2rem; color: cornflowerblue;">
+            Add a topic
+            <i class="bi bi-plus-circle-fill"></i>
+        </a>
     </div>
     {% endif %}
     <div class="list-group mt-3">

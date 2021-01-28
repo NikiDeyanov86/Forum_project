@@ -101,8 +101,7 @@ def add_topic():
 def open_topic(topic_id):
     topic = Topic.query.filter_by(id=topic_id).first()
     posts = Post.query.filter_by(topic_id=topic_id).all()
-    for post in posts:
-        print(post.__dict__)
+
     return render_template('open_topic.html', topic=topic, posts=posts)
 
 
@@ -152,7 +151,7 @@ def update_post(post_id):
         post.title = request.form['title']
         post.content = request.form['content']
         post.date = datetime.now()
-    
+
         db_session.commit()
 
         return redirect(url_for('open_topic', topic_id=post.topic_id))

@@ -12,7 +12,7 @@ class User(Base):
     username = Column(String(80), unique=True, nullable=False)
     password = Column(String(80), nullable=False)
     login_id = Column(String(36), nullable=True)
-    
+
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
 
@@ -47,7 +47,7 @@ class Post(Base):
     __tablename__ = "Post"
 
     id = Column(Integer, primary_key=True)
-    user_name = Column(String(80), nullable = False)
+    user_name = Column(String(80), nullable=False)
     user_id = Column(Integer, ForeignKey("User.id"))
     topic_id = Column(Integer, ForeignKey("Topic.id"))
     date = Column(DateTime, default=datetime.now())

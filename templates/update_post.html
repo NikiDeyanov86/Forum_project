@@ -18,9 +18,12 @@
                         <label for="InputTopicDesc">Content</label>
                         <textarea class="form-control" name="content" id="InputPostContent" placeholder="Content" required maxlength="256">{{ post.content }}</textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="/open_topic/{{ post.topic_id }}" style="text-decoration: none;">
-                    <button type="button" class="btn btn-primary float-right">Back to topic</button> </a>
+                    <div class="row mt-2 pr-3">
+                        <a class="col-6" href="/open_topic/{{ post.topic_id }}" style="text-decoration: none;">
+                            <button type="button" class="btn btn-outline-success btn-lg btn-block">Back to topic</button>
+                        </a>
+                        <button type="submit" class="btn btn-outline-primary btn-lg btn-block col-6">Update</button>
+                    </div>
                 </form>
             </div>
         </div>
